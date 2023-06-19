@@ -19,7 +19,7 @@ async function fetchData() {
     }
 }
 
-fetchData();
+// fetchData();
 
 async function writeDataToFile(data, filename) {
     const filePath = `metadata/${filename}.json`;
@@ -39,3 +39,27 @@ async function downloadImage(url, filename) {
         console.error('Error downloading image:', error.message);
     }
 }
+
+function combineMetadata() {
+    const files = fs.readdirSync('metadata')
+    function concatenateJSONFiles(files, outputFilePath) {
+        const concatenatedData = [];
+
+        files.forEach((file) => {
+            const jsonData = JSON.parse(fs.readFileSync(`metadata/${file}`));
+            concatenatedData.push(jsonData);
+        });
+
+        const concatenatedJSON = JSON.stringify(concatenatedData, null, 2);
+        fs.writeFileSync(outputFilePath, concatenatedJSON);
+
+        console.log(`JSON files concatenated to: ${outputFilePath}`);
+    }
+
+    // Specify the output file path
+    const outputFilePath = '_metadata.json';
+
+    concatenateJSONFiles(files, outputFilePath);
+}
+
+combineMetadata();
