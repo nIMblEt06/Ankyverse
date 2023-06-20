@@ -12,7 +12,7 @@ async function fetchData() {
             const filename = `${index}`;
             await writeDataToFile(data, filename);
             const imagename = `${index}`;
-            await downloadImage(data.upscaledImageUrls[0], imagename);
+            await downloadImage(data.upscaledImageUrls[Math.floor(Math.random() * 4)], imagename);
         });
     } catch (error) {
         console.error('Error fetching data:', error.message);
